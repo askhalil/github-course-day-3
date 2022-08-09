@@ -6,12 +6,22 @@ on:
       - "*"
 
 jobs:
-  bash:
+  job1:
+    env:
+      MY_SECRET: ${{ secrets.MY_SECRET }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: run bash command
-        env:
-          MY_SECRET: ${{ secrets.MY_SECRET }}
+      - name: step 1
         run: |
           echo $MY_SECRET
+          touch step1.txt
+          echo "hi from step 1" > step1.txt
+      - name: step 2
+        run: |
+          cat step1.txt
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step 3
+        run: |
+          cat step1.txt
